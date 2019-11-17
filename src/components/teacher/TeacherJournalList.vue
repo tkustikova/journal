@@ -1,6 +1,6 @@
 <template>
     <v-layout wrap align-content-start>
-        <v-flex xs12 class = "py-2 text-xs-center"><h2>{{teacherFullName ? teacherFullName : ""}} Журналы учителя</h2></v-flex>
+        <v-flex xs12 class = "py-2 text-xs-center"><h2>{{teacherFullName ? teacherFullName : ""}} Журналы врача</h2></v-flex>
         <tool-tip-btn v-if="!admin"
                       @click="form.open = !form.open"
                       active_icon = "add"
@@ -106,7 +106,7 @@
                                 </v-flex>
                             </v-layout>
                         </v-container>
-                        <small>*indicates required field</small>
+                        <small>*Обязательное поле</small>
                     </v-card-text>
                     <v-card-actions>
                         <v-spacer></v-spacer>

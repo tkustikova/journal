@@ -110,7 +110,7 @@
             <v-card>
                 <v-form v-model="form1.valid" ref="form1">
                     <v-card-title>
-                        <span class="headline">Данные ученика</span>
+                        <span class="headline">Данные пациента</span>
                     </v-card-title>
                     <v-card-text>
                         <v-container grid-list-md>
@@ -158,7 +158,7 @@
                                 </v-flex>
                             </v-layout>
                         </v-container>
-                        <small>*indicates required field</small>
+                        <small>*Обязательное поле</small>
                     </v-card-text>
                     <v-card-actions>
                         <v-spacer></v-spacer>
@@ -221,7 +221,7 @@
                                 </v-flex>
                             </v-layout>
                         </v-container>
-                        <small>*indicates required field</small>
+                        <small>*Обязательное поле</small>
                     </v-card-text>
                     <v-card-actions>
                         <v-spacer></v-spacer>

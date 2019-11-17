@@ -72,7 +72,7 @@
                                 </v-flex>
                             </v-layout>
                         </v-container>
-                        <small>*indicates required field</small>
+                        <small>*Обязательное поле</small>
                     </v-card-text>
                     <v-card-actions>
                         <v-spacer></v-spacer>

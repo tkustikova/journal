@@ -1,6 +1,6 @@
 <template>
     <v-layout wrap align-content-start>
-        <v-flex xs12 class = "py-2 text-xs-center"><h2>Список учителей</h2></v-flex>
+        <v-flex xs12 class = "py-2 text-xs-center"><h2>Список врачей</h2></v-flex>
         <tool-tip-btn @click="form.open = !form.open"
                       active_icon = "add"
                       active_text = "Добавить"
@@ -27,7 +27,7 @@
                         <td class="">{{ props.item.lastName }}</td>
                         <td class="">{{ props.item.login }}</td>
                         <td class="">{{ props.item.password }}</td>
-                        <td class="">{{ props.item.role === roles.ADMIN ? "Завуч" : "Учитель"}}</td>
+                        <td class="">{{ props.item.role === roles.ADMIN ? "Зав. отделением" : "Врач"}}</td>
                         <td>
                             <tool-tip-btn :round="true"
                                           @click="startEditUser(props.item)"
@@ -64,7 +64,7 @@
             <v-card>
                 <v-form v-model="form.valid" ref="form">
                     <v-card-title>
-                        <span class="headline">Данные учителя</span>
+                        <span class="headline">Данные врача</span>
                     </v-card-title>
                     <v-card-text>
                         <v-container grid-list-md>
@@ -95,12 +95,12 @@
                                                   v-model="form.data.password"></v-text-field>
                                 </v-flex>
                                 <v-flex xs12>
-                                    <v-checkbox label="Завуч"
+                                    <v-checkbox label="Заведующий отделением"
                                                 v-model="form.mainTeacher"></v-checkbox>
                                 </v-flex>
                             </v-layout>
                         </v-container>
-                        <small>*indicates required field</small>
+                        <small>*Обязательное поле</small>
                     </v-card-text>
                     <v-card-actions>
                         <v-spacer></v-spacer>
@@ -150,7 +150,7 @@
             pageLength: 25,
             roles,
             notFound:{
-                text: "Учителя не найдены",
+                text: "Врачи не найдены",
                 advice: null
             },
             form: {

@@ -15,11 +15,11 @@
         data: () => ({}),
 
         computed: {
-            // объект с навигацие на главной вкладке админа
+            // объект с навигацией на главной вкладке админа
             items() {
                 return [
                     {
-                        title: "Учителя",
+                        title: "Врачи",
                         route: { name: "teachers" },
                         active: this.$route.name === "teachers"
                     },
