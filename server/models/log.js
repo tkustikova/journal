@@ -29,9 +29,8 @@ const schema = new mongoose.Schema({
     students: [{
         firstName: String,
         lastName: String,
-        parents: String,
+        issue: String,
         misses: [mongoose.Schema.Types.ObjectId],
-        medical: Boolean,
         address: String,
         phone: String
     }]

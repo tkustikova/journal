@@ -75,7 +75,7 @@
 
         methods: {
             /**
-             * обновление времени с передачей радителю
+             * обновление времени с передачей родителю
              */
             updateStart(start = this.start) {
                 const val = parseInt(new Date(start).getTime()/1000);

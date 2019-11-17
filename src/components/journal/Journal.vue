@@ -5,14 +5,14 @@
             <v-flex v-if="!admin">
                 <tool-tip-btn @click="form2.open = !form2.open"
                           active_icon = "add"
-                          active_text = "Урок"
+                          active_text = "Прием"
                           data-prevent
                           :active = "form2.open"
                           class="ma-0 mr-1"></tool-tip-btn>
                 <tool-tip-btn @click="form1.open = !form1.open"
                               data-prevent
                               active_icon = "add"
-                              active_text = "Ученик"
+                              active_text = "Пациент"
                               :active = "form1.open"
                               class="ma-0 mr-4"></tool-tip-btn>
             </v-flex>
@@ -35,7 +35,7 @@
                         <th v-if="!admin">
                         </th>
                         <th class="text-xs-left">
-                            Ученик
+                            Пациент
                         </th>
                         <th class="text-xs-left pointer"
                             v-for="header in props.headers"
@@ -128,10 +128,10 @@
                                                   v-model="form1.data.lastName"></v-text-field>
                                 </v-flex>
                                 <v-flex xs12>
-                                    <v-text-field label="Полное Имя Родителя"
+                                    <v-text-field label="Причина обращения"
                                                   required
                                                   :rules="rules.name"
-                                                  v-model="form1.data.parents"
+                                                  v-model="form1.data.issue"
                                     ></v-text-field>
                                 </v-flex>
                                 <v-flex xs12>
@@ -150,12 +150,6 @@
                                                   v-model="form1.data.phone"
                                     ></v-text-field>
                                 </v-flex>
-                                <v-flex xs12>
-                                    <v-checkbox label="Медосмотр"
-                                                  required
-                                                  v-model="form1.data.medical"
-                                    ></v-checkbox>
-                                </v-flex>
                             </v-layout>
                         </v-container>
                         <small>*Обязательное поле</small>
@@ -172,13 +166,13 @@
             <v-card>
                 <v-form v-model="form2.valid" ref="form2">
                     <v-card-title>
-                        <span class="headline">Информация об уроке</span>
+                        <span class="headline">Информация о приеме</span>
                     </v-card-title>
                     <v-card-text>
                         <v-container grid-list-md>
                             <v-layout wrap>
                                 <v-flex xs12>
-                                    <v-text-field label="Название Урока"
+                                    <v-text-field label="Название"
                                                   required
                                                   :rules="rules.name"
                                                   v-model="form2.data.name"></v-text-field>
@@ -205,7 +199,7 @@
                                         <template v-slot:activator="{ on }">
                                             <v-text-field
                                                     v-model="form2.data.date"
-                                                    label="Picker in menu"
+                                                    label="Дата создания приема"
                                                     prepend-icon="event"
                                                     readonly
                                                     :rules="rules.name"
@@ -285,21 +279,20 @@
                 text: "Журналы не найдены",
                 advice: null
             },
-            //данные формы ученика
+            //данные формы пациента
             form1: {
                 open: false,
                 valid: false,
                 data: {
                     firstName: "",
                     lastName: "",
-                    parents: "",
+                    issue: "",
                     address: "",
-                    phone: "",
-                    medical: false
+                    phone: ""
                 },
                 _id: ""
             },
-            //данные формы урока
+            //данные формы приема
             form2: {
                 open: false,
                 valid: false,
@@ -323,10 +316,10 @@
                 password: [
                     v => !!v || "",
                     v =>
-                        v && v.search(/[а-яА-ЯёЁ]/g) === -1 || "в пароле не должно быть кириллицы"
+                        v && v.search(/[а-яА-ЯёЁ]/g) === -1 || "В пароле не должно быть кириллицы"
                 ],
                 phone: [
-                    v => v && v.length && v.length === 10 || "введите полный номер"
+                    v => v && v.length && v.length === 10 || "Введите полный номер"
                 ]
             },
         }),
@@ -348,7 +341,7 @@
                 return this.journal.students || [];
             },
             /**
-             * уроки отфильтрованные по времени
+             * приемы отфильтрованные по времени
              */
             lessons() {
                 return (this.journal.lessons || [])
@@ -456,7 +449,7 @@
             },
             /**
              *
-             * заполнение формы студента текущими данными перед редактированием
+             * заполнение формы пациента текущими данными перед редактированием
              */
             startEditStudent(id){
                 const user = this.list.find(item => item._id === id)
@@ -466,16 +459,15 @@
                 form._id = user._id;
                 data.firstName = user.firstName;
                 data.lastName = user.lastName;
-                data.parents = user.parents;
+                data.issue = user.issue;
                 data.address = user.address;
                 data.phone = user.phone;
-                data.medical = user.medical || false;
 
                 this.openForm(1);
             },
             /**
              *
-             * заполнение формы урока текущими данными перед редактированием
+             * заполнение формы приема текущими данными перед редактированием
              */
             startEditLesson(id){
                 const lesson = this.lessons.find(item => item._id === id);
@@ -491,7 +483,7 @@
             },
             /**
              *
-             * общий метод по редактированию журнала создает/редактирует учеников/уроки в журнале
+             * общий метод по редактированию журнала создает/редактирует пациентов/приемы в журнале
              */
             editJournal(n) {
                 let journal = { ...this.journal },
@@ -520,7 +512,7 @@
                     .then(() => this.cancel(n));
             },
             /**
-             * удаление ученика
+             * удаление пациента
              */
             removeStudent(id) {
                 let journal = { ...this.journal };
@@ -533,7 +525,7 @@
                 this.$store.dispatch("editJournal", journal);
             },
             /**
-             * удаление урока
+             * удаление приема
              */
             removeLesson(id) {
                 let journal = { ...this.journal };
@@ -571,7 +563,7 @@
                 }
             },
             /**
-             * установка диапахона выборки уроков
+             * установка диапазона выборки приемов
              */
             updateInterval({ field, val }) {
                 if (field in this.interval){
@@ -579,14 +571,14 @@
                 }
             },
             /**
-             * к карточке студента
+             * к карточке пациента
              * @param id
              */
             toStudent(id){
                 this.$router.push({name: "student", params: { id }});
             },
             /**
-             * к карточке урока
+             * к карточке приема
              * @param id
              */
             toLesson(id){

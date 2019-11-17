@@ -31,10 +31,9 @@
 
                 prepairUser.Имя = user.firstName;
                 prepairUser.Фамилия = user.lastName;
-                prepairUser.Родитель = user.parents;
+                prepairUser.Обращение = user.issue;
                 prepairUser.Адрес = user.address;
                 prepairUser.Телефон = user.phone;
-                prepairUser.Медосмотр = user.medical ? "+" :  "-";
 
                 return prepairUser;
             }
