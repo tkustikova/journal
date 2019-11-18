@@ -1,6 +1,12 @@
 <template>
     <v-layout wrap align-content-start>
-        <v-flex xs12 class = "py-2 text-xs-center"><h2>Список журналов</h2></v-flex>
+        <v-flex xs12 class = "py-2 text-xs-center"><h2>Услуги</h2></v-flex>
+        <tool-tip-btn v-if="!admin"
+                      @click="form.open = !form.open"
+                      active_icon = "add"
+                      active_text = "Добавить"
+                      :active = "form.open"
+                      class="ma-0 mr-1"></tool-tip-btn>
         <v-flex v-if = "resultList.length || !loaded"
                 xs12 >
             <v-layout>
@@ -12,15 +18,15 @@
                     :loading = "!loaded"
                     hide-actions
                     must-sort
-                    no-data-text="">
+                    no-data-text=""
+            >
                 <template slot="items"
                           slot-scope="props">
                     <tr @click="(e) => toJournal(e, props.item._id)"
                         class="pointer">
                         <td class="">{{ props.item.name }}</td>
-                        <td class="">{{ props.item.year.slice(0,10) }}</td>
                         <td class="">{{ props.item.ownerName }}</td>
-                        <td>
+                        <td v-if="!admin">
                             <tool-tip-btn :round="true"
                                           data-prevent
                                           @click="startEditJournal(props.item)"
@@ -62,13 +68,40 @@
                         <v-container grid-list-md>
                             <v-layout wrap>
                                 <v-flex xs12>
-                                    <v-select v-model="form.data.owner"
-                                              :items="userList"
-                                              item-text="lastName"
-                                              item-value="_id"
-                                              label="Выберите держателя"
-                                              return-object
-                                              single-line></v-select>
+                                    <v-text-field label="Имя журнала"
+                                                  required
+                                                  :rules="rules.name"
+                                                  v-model="form.data.name"></v-text-field>
+                                </v-flex>
+                                <v-flex xs12>
+                                    <v-menu
+                                            ref="menu"
+                                            v-model="form.datePicker"
+                                            :close-on-content-click="false"
+                                            :nudge-right="40"
+                                            :return-value.sync="form.data.year"
+                                            lazy
+                                            transition="scale-transition"
+                                            offset-y
+                                            full-width
+                                            min-width="290px"
+                                    >
+                                        <template v-slot:activator="{ on }">
+                                            <v-text-field
+                                                    v-model="form.data.year"
+                                                    label="Picker in menu"
+                                                    prepend-icon="event"
+                                                    readonly
+                                                    :rules="rules.name"
+                                                    v-on="on"
+                                            ></v-text-field>
+                                        </template>
+                                        <v-date-picker v-model="form.data.year" no-title scrollable>
+                                            <v-spacer></v-spacer>
+                                            <v-btn flat color="primary" @click="form.datePicker = false">Cancel</v-btn>
+                                            <v-btn flat color="primary" @click="$refs.menu.save(form.data.year)">OK</v-btn>
+                                        </v-date-picker>
+                                    </v-menu>
                                 </v-flex>
                             </v-layout>
                         </v-container>
@@ -92,12 +125,12 @@
     import { roles } from "../../modules/constant";
 
     export default {
-        name: "TeacherList",
+        name: "ServiceJournalList",
 
         components:{
             InfiniteLoading,
             NavigationNotFound,
-            ToolTipBtn
+            ToolTipBtn,
         },
 
         mounted(){
@@ -116,23 +149,30 @@
             this.$store.commit("SET_NEED_UPDATE", true);
         },
 
+        props: {
+            user_id: {
+                type: String,
+            }
+        },
+
         data: () => ({
             //признак того что загрузка завершена
             loaded: false,
             pageLength: 25,
             roles,
             notFound:{
-                text: "Журналы не найдены",
+                text: "Услуги не найдены",
                 advice: null
             },
             form: {
                 open: false,
                 valid: false,
+                datePicker: false,
                 data: {
-                    owner: "",
+                    name: "",
+                    year: new Date().toISOString().substr(0, 10),
                 },
-                _id: "",
-                mainTeacher: false
+                _id: ""
             },
             rules: {
                 name: [v => !!v || ""],
@@ -147,51 +187,48 @@
 
         computed: {
             /**
-             * список журналов
+             * список рейсов
              * @returns {default.computed.flightList|(function())|getters.flightList|Array}
              */
             list(){
-                return this.$store.getters.journalList;
+                return this.$store.getters.journalListByOwner(this.id);
             },
             /**
-             * список журналов с учетом фильтров
+             * список рейсов с учетом фильтров
              * @returns {*}
              */
             filtredList(){
                 return this.list
                     .filter(item => item.name.indexOf(this.filterWord) !== -1);
             },
+
+            admin() {
+                return this.$store.getters.authUserIsAdmin
+            },
             /**
-             * список журналов с учетом пагинации
+             * список рейсов с учетом пагинации
              */
             resultList(){
                 return this.filtredList
                     .slice(0, this.pageLength * this.flightListPage < this.list.length ?
                         this.pageLength * this.flightListPage : this.list.length)
                     .map(item => {
-                        const owner = this.$store.getters.userById(item.owner);
+                        const owner = this.$store.getters.getServices(item.owner);
                         if (owner) {
                             const ownerName = owner.lastName + " " + owner.firstName;
                             return { ...item, ownerName};
                         }
 
                         return item;
-
                     })
             },
-            /**
-             * список пользователей кроме собственника журнала и админов
-             */
-            userList() {
-                return (this.form.data.owner ?
-                    this.$store.getters.userList.filter(item => item._id !== this.form.data.owner) :
-                    this.$store.getters.userList)
-                    .filter(item => item.role !== roles.ADMIN);
-            },
-
 
             filterWord(){
                 return this.$store.getters.filterWord;
+            },
+
+            id() {
+                return this.user_id || this.$store.getters.authUser;
             },
 
             //конфигурация таблицы
@@ -201,19 +238,19 @@
                         { text: "Название", align: "left", value: "name", sortable: true },
                         { text: "Дата создания", align: "left", value: "year", sortable: true },
                         { text: "Держатель", align: "left", value: "owner", sortable: false },
-                        { text: "", align: "left", value: "", sortable: false },
-                    ]
+                        !this.admin && { text: "", align: "left", value: "", sortable: false }
+                    ].filter(item => item)
                 )
             }
         },
 
         methods: {
             /**
-             * запрос списка журналов
+             * запрос рейсов
              */
             init(){
                 this.loaded = false;
-                this.$store.dispatch("getJournalList").then(() =>this.loaded = true);
+                this.$store.dispatch("getTeacherJournalList", { id: this.id }).then(() =>this.loaded = true);
             },
             /**
              * оьработка подгрузки
@@ -228,17 +265,13 @@
                 }
             },
             /**
-             * к журналу
+             * к рейсу
              * @param id
              */
             toJournal(e, id){
                 if (!e.target.closest('[data-prevent]')) {
-                    this.$router.push({name: "journal", params: {id}})
+                    this.$router.push({name: "journal", params: {id}});
                 }
-            },
-
-            removeJournal(id) {
-                this.$store.dispatch("delJournal", { id });
             },
 
             clearForm() {
@@ -256,21 +289,49 @@
             cancel(){
                 this.clearForm();
                 this.closeForm();
-                this.form._id ="";
+                this.form._id = "";
             },
 
             apply() {
-                const journal = { ...this.$store.getters.journalById(this.form._id) };
+                if (this.form.valid) {
+                    if (!this.form._id) {
+                        this.addJournal();
+                    } else {
+                        this.editJournal();
+                    }
+                }
+            },
 
-                journal.owner = this.form.data.owner._id;
-                this.$store.dispatch("editJournal", journal)
+            addJournal() {
+                this.$store.dispatch("addJournal",
+                    {
+                        ...this.form.data,
+                        year: new Date(this.form.data.year),
+                        owner: this.id
+                    })
                     .then(this.cancel);
             },
 
-            startEditJournal({ owner, _id }) {
+            editJournal() {
+                this.$store.dispatch("editJournal",
+                    {
+                        ...this.form.data,
+                        year: new Date(this.form.data.year),
+                        owner: this.id,
+                        _id: this.form._id
+                    })
+                    .then(this.cancel);
+            },
+
+            removeJournal(id) {
+                this.$store.dispatch("delJournal", { id });
+            },
+
+            startEditJournal({ name, year, _id }) {
                 this.openForm();
                 let data = this.form.data;
-                data.owner = owner;
+                data.name = name;
+                data.year = new Date(year).toISOString().substr(0, 10);
                 this.form._id = _id;
             }
         }

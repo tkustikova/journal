@@ -6,6 +6,7 @@ import TeacherView from "./views/TeacherView";
 import NotFoundView from "./views/NotFoundView";
 import LoginView from "./views/LoginView";
 import JournalView from "./views/JournalView";
+import ServiceView from "./views/ServiceView";
 import LessonView from "./views/LessonView";
 import StudentView from "./views/StudentView"
 
@@ -14,8 +15,10 @@ import store from "./store/index";
 
 import TeacherList from "./components/teacher/TeacherList";
 import JournalList from "./components/journal/JournalList";
+import ServiceList from "./components/service/ServiceList";
 import TeacherJournalList from "./components/teacher/TeacherJournalList";
 import Journal from "./components/journal/Journal";
+import ServiceJournalList from "./components/service/ServiceJournalList";
 import StudentCard from "./components/student/StudentCard";
 import LessonCard from "./components/lesson/LessonCard";
 
@@ -54,6 +57,13 @@ const routes = [
         path: "journals",
         component: JournalList,
         meta: { requiresAuth: true, access: accesses.admin }
+      },
+      {
+        name: "services",
+        path: "services",
+        component: ServiceList,
+        meta: {requiresAuth: true, access: accesses.admin, replace: { [roles.TEACHER]: { name: "teacher"}}  }
+
       }
 
     ]
@@ -88,7 +98,7 @@ const routes = [
         meta: { requiresAuth: true, access: accesses.all }
       }
     ]
-  }, {
+  },{
     name: "",
     path: "/student",
     component: StudentView,

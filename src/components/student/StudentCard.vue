@@ -1,5 +1,5 @@
 <template>
-    <Card :title="'Ученик'"
+    <Card :title="'Пациент'"
           :item="student"></Card>
 </template>
 
@@ -22,7 +22,7 @@
         },
 
         computed: {
-            //преобразование объекта студента в представление для карточки студента
+            //преобразование объекта пациента в представление для карточки пациента
             student() {
                 const user = this.$store.getters.studentById(this.student_id);
                 const prepairUser = {

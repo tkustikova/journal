@@ -1,6 +1,11 @@
 <template>
     <v-layout wrap align-content-start>
-        <v-flex xs12 class = "py-2 text-xs-center"><h2>Список журналов</h2></v-flex>
+        <v-flex xs12 class = "py-2 text-xs-center"><h2>Список услуг</h2></v-flex>
+        <tool-tip-btn @click="form.open = !form.open"
+                      active_icon = "add"
+                      active_text = "Добавить"
+                      :active = "form.open"
+                      class="ma-0 mr-1"></tool-tip-btn>
         <v-flex v-if = "resultList.length || !loaded"
                 xs12 >
             <v-layout>
@@ -12,25 +17,25 @@
                     :loading = "!loaded"
                     hide-actions
                     must-sort
-                    no-data-text="">
+                    no-data-text=""
+            >
                 <template slot="items"
                           slot-scope="props">
-                    <tr @click="(e) => toJournal(e, props.item._id)"
-                        class="pointer">
+                    <!--<tr @click="(e) => toTeacher(e, props.item._id)" -->
+                        <tr class="pointer">
                         <td class="">{{ props.item.name }}</td>
-                        <td class="">{{ props.item.year.slice(0,10) }}</td>
-                        <td class="">{{ props.item.ownerName }}</td>
+                        <td class="">{{ props.item.cost }}</td>
                         <td>
                             <tool-tip-btn :round="true"
+                                          @click="startEditService(props.item)"
                                           data-prevent
-                                          @click="startEditJournal(props.item)"
                                           active_icon = "edit"
                                           active_text = "Редактировать"
                                           :active = "form.open"
                                           class="ma-0 mr-1"></tool-tip-btn>
                             <tool-tip-btn :round="true"
+                                          @click="removeUser(props.item._id)"
                                           data-prevent
-                                          @click="removeJournal(props.item._id)"
                                           active_icon = "clear"
                                           active_text = "Удалить"
                                           :active = "false"
@@ -56,19 +61,22 @@
             <v-card>
                 <v-form v-model="form.valid" ref="form">
                     <v-card-title>
-                        <span class="headline">Данные журнала</span>
+                        <span class="headline">Данные услуги</span>
                     </v-card-title>
                     <v-card-text>
                         <v-container grid-list-md>
                             <v-layout wrap>
                                 <v-flex xs12>
-                                    <v-select v-model="form.data.owner"
-                                              :items="userList"
-                                              item-text="lastName"
-                                              item-value="_id"
-                                              label="Выберите держателя"
-                                              return-object
-                                              single-line></v-select>
+                                    <v-text-field label="Название"
+                                                  required
+                                                  :rules="rules.name"
+                                                  v-model="form.data.name"></v-text-field>
+                                </v-flex>
+                                <v-flex xs12>
+                                    <v-text-field label="Стоимость"
+                                                  required
+                                                  :rules="rules.cost"
+                                                  v-model="form.data.cost"></v-text-field>
                                 </v-flex>
                             </v-layout>
                         </v-container>
@@ -92,12 +100,12 @@
     import { roles } from "../../modules/constant";
 
     export default {
-        name: "TeacherList",
+        name: "ServiceList",
 
         components:{
             InfiniteLoading,
             NavigationNotFound,
-            ToolTipBtn
+            ToolTipBtn,
         },
 
         mounted(){
@@ -122,74 +130,48 @@
             pageLength: 25,
             roles,
             notFound:{
-                text: "Журналы не найдены",
+                text: "Услуги не найдены",
                 advice: null
             },
             form: {
                 open: false,
                 valid: false,
                 data: {
-                    owner: "",
-                },
-                _id: "",
-                mainTeacher: false
+                    name: "",
+                    cost: "",
+                    _id: ""
+                }
             },
             rules: {
                 name: [v => !!v || ""],
-                login: [v => !!v || ""],
-                password: [
-                    v => !!v || "",
-                    v =>
-                        v && v.search(/[а-яА-ЯёЁ]/g) === -1 || "в пароле не должно быть кириллицы"
-                ]
+                cost: [v => !!v && v>0 || "Стоимость не должна быть меньше 0"]
             },
         }),
 
         computed: {
             /**
-             * список журналов
+             * список услуг
              * @returns {default.computed.flightList|(function())|getters.flightList|Array}
              */
             list(){
-                return this.$store.getters.journalList;
+                return this.$store.getters.userList;
             },
             /**
-             * список журналов с учетом фильтров
+             * список услуг с учетом фильтров
              * @returns {*}
              */
             filtredList(){
                 return this.list
-                    .filter(item => item.name.indexOf(this.filterWord) !== -1);
+                    .filter(teacher => teacher.firstName.indexOf(this.filterWord) !== -1);
             },
             /**
-             * список журналов с учетом пагинации
+             * список услуг с учетом пагинации
              */
             resultList(){
                 return this.filtredList
                     .slice(0, this.pageLength * this.flightListPage < this.list.length ?
-                        this.pageLength * this.flightListPage : this.list.length)
-                    .map(item => {
-                        const owner = this.$store.getters.userById(item.owner);
-                        if (owner) {
-                            const ownerName = owner.lastName + " " + owner.firstName;
-                            return { ...item, ownerName};
-                        }
-
-                        return item;
-
-                    })
+                        this.pageLength * this.flightListPage : this.list.length);
             },
-            /**
-             * список пользователей кроме собственника журнала и админов
-             */
-            userList() {
-                return (this.form.data.owner ?
-                    this.$store.getters.userList.filter(item => item._id !== this.form.data.owner) :
-                    this.$store.getters.userList)
-                    .filter(item => item.role !== roles.ADMIN);
-            },
-
-
             filterWord(){
                 return this.$store.getters.filterWord;
             },
@@ -199,9 +181,11 @@
                 return(
                     [
                         { text: "Название", align: "left", value: "name", sortable: true },
-                        { text: "Дата создания", align: "left", value: "year", sortable: true },
-                        { text: "Держатель", align: "left", value: "owner", sortable: false },
-                        { text: "", align: "left", value: "", sortable: false },
+                        { text: "Стоимость", align: "left", value: "cost", sortable: true },
+                        { text: "Логин", align: "left", value: "login", sortable: false },
+                        { text: "Пароль", align: "left", value: "password", sortable: false },
+                        { text: "Должность", align: "left", value: "role", sortable: true },
+                        { text: "", align: "right", value: "", sortable: false }
                     ]
                 )
             }
@@ -209,11 +193,11 @@
 
         methods: {
             /**
-             * запрос списка журналов
+             * запрос списка врачей
              */
             init(){
                 this.loaded = false;
-                this.$store.dispatch("getJournalList").then(() =>this.loaded = true);
+                this.$store.dispatch("getUserList").then(() =>this.loaded = true);
             },
             /**
              * оьработка подгрузки
@@ -228,17 +212,14 @@
                 }
             },
             /**
-             * к журналу
+             * переход к списку журналов врача
+             * @param e
              * @param id
              */
-            toJournal(e, id){
-                if (!e.target.closest('[data-prevent]')) {
-                    this.$router.push({name: "journal", params: {id}})
+            toTeacher(e, id) {
+                if (!e.target.closest('[data-prevent]')){
+                    this.$router.push({ name: "idTeacher", params: { id } });
                 }
-            },
-
-            removeJournal(id) {
-                this.$store.dispatch("delJournal", { id });
             },
 
             clearForm() {
@@ -256,22 +237,42 @@
             cancel(){
                 this.clearForm();
                 this.closeForm();
-                this.form._id ="";
+                this.form.data._id = "";
             },
 
             apply() {
-                const journal = { ...this.$store.getters.journalById(this.form._id) };
+                if (this.form.valid) {
+                    if (!this.form.data._id) {
+                        this.addUser();
+                    } else {
+                        this.editUser();
+                    }
+                }
+            },
 
-                journal.owner = this.form.data.owner._id;
-                this.$store.dispatch("editJournal", journal)
+            addUser() {
+                const role = this.form.mainTeacher ? roles.ADMIN : roles.TEACHER;
+                const { firstName, lastName, login, password } = this.form.data
+                this.$store.dispatch("addUser", { firstName, lastName, login, password, role })
                     .then(this.cancel);
             },
 
-            startEditJournal({ owner, _id }) {
-                this.openForm();
+            editUser() {
+                const role = this.form.mainTeacher ? roles.ADMIN : roles.TEACHER
+                this.$store.dispatch("editUser", { ...this.form.data, role })
+                    .then(this.cancel);
+            },
+
+            removeUser(id) {
+                this.$store.dispatch("delUser", { id });
+            },
+
+            startEditService({ name, cost, _id }) {
                 let data = this.form.data;
-                data.owner = owner;
-                this.form._id = _id;
+                data.name = name;
+                data.cost = cost;
+                data._id = _id;
+                this.openForm();
             }
         }
     };

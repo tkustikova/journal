@@ -171,21 +171,21 @@
                 password: [
                     v => !!v || "",
                     v =>
-                        v && v.search(/[а-яА-ЯёЁ]/g) === -1 || "в пароле не должно быть кириллицы"
+                        v && v.search(/[а-яА-ЯёЁ]/g) === -1 || "В пароле не должно быть кириллицы"
                 ]
             },
         }),
 
         computed: {
             /**
-             * список учителей
+             * список врачей
              * @returns {default.computed.flightList|(function())|getters.flightList|Array}
              */
             list(){
                 return this.$store.getters.userList;
             },
             /**
-             * список учителе с учетом фильтров
+             * список врачей с учетом фильтров
              * @returns {*}
              */
             filtredList(){
@@ -193,7 +193,7 @@
                     .filter(teacher => teacher.lastName.indexOf(this.filterWord) !== -1);
             },
             /**
-             * список учителей с учетом пагинации
+             * список врачей с учетом пагинации
              */
             resultList(){
                 return this.filtredList
@@ -221,7 +221,7 @@
 
         methods: {
             /**
-             * запрос списка учителей
+             * запрос списка врачей
              */
             init(){
                 this.loaded = false;
@@ -240,7 +240,7 @@
                 }
             },
             /**
-             * переход к списку журналов учителя
+             * переход к списку журналов врача
              * @param e
              * @param id
              */

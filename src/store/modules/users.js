@@ -30,7 +30,7 @@ const getters = {
 };
 
 const actions = {
-    //получить поьзователей
+    //получить пользователей
     getUserList({ commit }) {
         const url = 'users';
         const method = "GET";

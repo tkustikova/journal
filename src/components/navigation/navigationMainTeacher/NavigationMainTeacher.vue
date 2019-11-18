@@ -28,6 +28,11 @@
                         route: { name: "journals" },
                         active: this.$route.name === "journals"
                     },
+                    {
+                        title: "Услуги",
+                        route: {name: "services" },
+                        active: this.$route.name === "services"
+                    }
                 ]
             },
         },

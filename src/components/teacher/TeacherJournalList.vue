@@ -1,6 +1,6 @@
 <template>
     <v-layout wrap align-content-start>
-        <v-flex xs12 class = "py-2 text-xs-center"><h2>{{teacherFullName ? teacherFullName : ""}} Журналы врача</h2></v-flex>
+        <v-flex xs12 class = "py-2 text-xs-center"><h2>{{teacherFulName ? teacherFullName : ""}} Журналы врача</h2></v-flex>
         <tool-tip-btn v-if="!admin"
                       @click="form.open = !form.open"
                       active_icon = "add"
