@@ -26,6 +26,9 @@ const getters = {
     // услуга по id
     serviceById: state => id => {
         return state.serviceList.find(service => service._id === id)
+    },
+    filterWord(){
+        return this.$store.getters.filterWord;
     }
 };
 
@@ -35,10 +38,10 @@ const actions = {
         const url = 'services';
         const method = "GET";
         return RequestApi.request({ additional: { url, method }})
-            .then(services => commit("getServiceList", services));
+            .then(services => commit("SET_SERVICE_LIST", services));
     },
     //добавить услугу
-    addService({ dispatch }, params) {
+    addUService({ dispatch }, params) {
         const url = 'services/add';
         return RequestApi.request({ body: params, additional: { url, showErr: true }})
             .then(services => dispatch("getServiceList", services));

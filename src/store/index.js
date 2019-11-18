@@ -8,6 +8,7 @@ import popup from "./modules/popup";
 import auth from "./modules/auth";
 import users from "./modules/users";
 import journals from "./modules/journals";
+import services from "./modules/services";
 
 
 Vue.use(Vuex);
@@ -18,6 +19,7 @@ const common = {
         clearStore({ commit }){
             commit("CLEAR_USER_LIST");
             commit("CLEAR_JOURNAL_LIST");
+            commit("CLEAR_SERVICE_LIST");
         }
     }
 };
@@ -40,6 +42,7 @@ export default new Vuex.Store({
         auth,
         users,
         journals,
+        services,
         common
     }
 });

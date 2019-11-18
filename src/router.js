@@ -62,7 +62,7 @@ const routes = [
         name: "services",
         path: "services",
         component: ServiceList,
-        meta: {requiresAuth: true, access: accesses.admin, replace: { [roles.TEACHER]: { name: "teacher"}}  }
+        meta: {requiresAuth: true, access: accesses.all  }
 
       }
 

@@ -21,7 +21,6 @@
             >
                 <template slot="items"
                           slot-scope="props">
-                    <!--<tr @click="(e) => toTeacher(e, props.item._id)" -->
                         <tr class="pointer">
                         <td class="">{{ props.item.name }}</td>
                         <td class="">{{ props.item.cost }}</td>
@@ -34,7 +33,7 @@
                                           :active = "form.open"
                                           class="ma-0 mr-1"></tool-tip-btn>
                             <tool-tip-btn :round="true"
-                                          @click="removeUser(props.item._id)"
+                                          @click="removeService(props.item._id)"
                                           data-prevent
                                           active_icon = "clear"
                                           active_text = "Удалить"
@@ -128,7 +127,6 @@
             //признак того что загрузка завершена
             loaded: false,
             pageLength: 25,
-            roles,
             notFound:{
                 text: "Услуги не найдены",
                 advice: null
@@ -154,7 +152,7 @@
              * @returns {default.computed.flightList|(function())|getters.flightList|Array}
              */
             list(){
-                return this.$store.getters.userList;
+                return this.$store.getters.serviceList;
             },
             /**
              * список услуг с учетом фильтров
@@ -162,7 +160,7 @@
              */
             filtredList(){
                 return this.list
-                    .filter(teacher => teacher.firstName.indexOf(this.filterWord) !== -1);
+                    .filter(service => service.name.indexOf(this.filterWord) !== -1);
             },
             /**
              * список услуг с учетом пагинации
@@ -182,9 +180,6 @@
                     [
                         { text: "Название", align: "left", value: "name", sortable: true },
                         { text: "Стоимость", align: "left", value: "cost", sortable: true },
-                        { text: "Логин", align: "left", value: "login", sortable: false },
-                        { text: "Пароль", align: "left", value: "password", sortable: false },
-                        { text: "Должность", align: "left", value: "role", sortable: true },
                         { text: "", align: "right", value: "", sortable: false }
                     ]
                 )
@@ -193,14 +188,14 @@
 
         methods: {
             /**
-             * запрос списка врачей
+             * запрос списка услуг
              */
             init(){
                 this.loaded = false;
-                this.$store.dispatch("getUserList").then(() =>this.loaded = true);
+                this.$store.dispatch("getServiceList").then(() =>this.loaded = true);
             },
             /**
-             * оьработка подгрузки
+             * обработка подгрузки
              * @param $state
              */
             infiniteHandler($state){
@@ -211,17 +206,6 @@
                     $state.complete();
                 }
             },
-            /**
-             * переход к списку журналов врача
-             * @param e
-             * @param id
-             */
-            toTeacher(e, id) {
-                if (!e.target.closest('[data-prevent]')){
-                    this.$router.push({ name: "idTeacher", params: { id } });
-                }
-            },
-
             clearForm() {
                 this.$refs.form.reset();
             },
@@ -243,28 +227,26 @@
             apply() {
                 if (this.form.valid) {
                     if (!this.form.data._id) {
-                        this.addUser();
+                        this.addService();
                     } else {
-                        this.editUser();
+                        this.editService();
                     }
                 }
             },
 
-            addUser() {
-                const role = this.form.mainTeacher ? roles.ADMIN : roles.TEACHER;
-                const { firstName, lastName, login, password } = this.form.data
-                this.$store.dispatch("addUser", { firstName, lastName, login, password, role })
+            addService() {
+                const { name, cost } = this.form.data
+                this.$store.dispatch("addService", { name, cost })
                     .then(this.cancel);
             },
 
-            editUser() {
-                const role = this.form.mainTeacher ? roles.ADMIN : roles.TEACHER
-                this.$store.dispatch("editUser", { ...this.form.data, role })
+            editService() {
+                this.$store.dispatch("editService", { ...this.form.data })
                     .then(this.cancel);
             },
 
-            removeUser(id) {
-                this.$store.dispatch("delUser", { id });
+            removeService(id) {
+                this.$store.dispatch("delService", { id });
             },
 
             startEditService({ name, cost, _id }) {
