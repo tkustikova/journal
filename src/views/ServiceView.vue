@@ -11,7 +11,7 @@
         <template slot="content">
             <v-layout wrap align-content-start>
                 <v-flex xs12>
-                    <router-view :user_id="userId"></router-view>
+                    <router-view :service_id="serviceId"></router-view>
                 </v-flex>
             </v-layout>
         </template>
@@ -36,8 +36,8 @@
         }),
 
         computed: {
-            userId() {
-                return this.$route.params.id || this.$store.getters.authUser && this.$store.getters.authUser._id;
+            serviceId() {
+                return this.$route.params.id || this.$store.getters.serviceById && this.$store.getters.serviceById._id;
             }
         },
 

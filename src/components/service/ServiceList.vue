@@ -96,7 +96,6 @@
     import InfiniteLoading from "vue-infinite-loading";
     import NavigationNotFound from "../navigation/navigationNotFound/NavigationNotFound";
     import ToolTipBtn from "../common/toolTipBtn/ToolTipBtn";
-    import { roles } from "../../modules/constant";
 
     export default {
         name: "ServiceList",
@@ -234,9 +233,9 @@
                 }
             },
 
-            addService() {
-                const { name, cost } = this.form.data
-                this.$store.dispatch("addService", { name, cost })
+            addService: function () {
+                const {cost, name} = this.form.data;
+                this.$store.dispatch("addService", {name, cost})
                     .then(this.cancel);
             },
 

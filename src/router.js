@@ -3,10 +3,10 @@ import Router from "vue-router";
 
 import MainTeacherView from "./views/MainTeacherView";
 import TeacherView from "./views/TeacherView";
+import ServiceView from "./views/ServiceView";
 import NotFoundView from "./views/NotFoundView";
 import LoginView from "./views/LoginView";
 import JournalView from "./views/JournalView";
-import ServiceView from "./views/ServiceView";
 import LessonView from "./views/LessonView";
 import StudentView from "./views/StudentView"
 
@@ -18,7 +18,6 @@ import JournalList from "./components/journal/JournalList";
 import ServiceList from "./components/service/ServiceList";
 import TeacherJournalList from "./components/teacher/TeacherJournalList";
 import Journal from "./components/journal/Journal";
-import ServiceJournalList from "./components/service/ServiceJournalList";
 import StudentCard from "./components/student/StudentCard";
 import LessonCard from "./components/lesson/LessonCard";
 
@@ -37,12 +36,14 @@ const routes = [
     path: "/",
     redirect: { name: 'teachers' },
     meta: { requiresAuth: true, access: accesses.all }
-   }, {
+   },
+  {
     name: "login",
     path: "/login",
     component: LoginView,
     meta: { requiresAuth: false, access: accesses.all }
-  }, {
+  },
+  {
     path: "/main",
     component: MainTeacherView,
     meta: { requiresAuth: true, access: accesses.all},
@@ -62,12 +63,13 @@ const routes = [
         name: "services",
         path: "services",
         component: ServiceList,
-        meta: {requiresAuth: true, access: accesses.all  }
+        meta: {requiresAuth: true, access: accesses.all}
 
       }
 
     ]
-  }, {
+  },
+  {
     name: "",
     path: "/teacher",
     component: TeacherView,
@@ -85,7 +87,8 @@ const routes = [
         meta: { requiresAuth: true, access: accesses.admin }
       }
     ]
-  }, {
+  },
+  {
     name: "",
     path: "/journal",
     component: JournalView,
@@ -98,7 +101,8 @@ const routes = [
         meta: { requiresAuth: true, access: accesses.all }
       }
     ]
-  },{
+  },
+  {
     name: "",
     path: "/student",
     component: StudentView,
@@ -111,7 +115,8 @@ const routes = [
         meta: { requiresAuth: true, access: accesses.all }
       }
     ]
-  }, {
+  },
+  {
     name: "",
     path: "/lesson",
     component: LessonView,
@@ -124,7 +129,8 @@ const routes = [
         meta: { requiresAuth: true, access: accesses.all }
       }
     ]
-  }, {
+  },
+  {
     name: "404",
     path: "/*",
     component: NotFoundView,

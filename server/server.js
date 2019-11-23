@@ -11,6 +11,7 @@ const express = require('express'),
     auth = require("./controllers/auth"),
     users = require("./controllers/users"),
     journals = require("./controllers/journals"),
+    services = require("./controllers/services"),
     port = 8000,
     session = require("express-session"),
     mongoose = require("mongoose"),
@@ -37,5 +38,6 @@ app.use(session({
 app.use('/api/user/', auth);
 app.use('/api/users/', users);
 app.use('/api/journals/', journals);
+app.use('/api/services/', services);
 
 app.listen(port, () => console.log(`Listening on port ${port}!`));

@@ -7,11 +7,11 @@ const schema = new mongoose.Schema({
         required: true
     },
     cost: {
-        type: Date,
+        type: Number,
         required: true
     }
 });
 
-const model = mongoose.model("Serv", schema);
+const model = mongoose.model("service", schema);
 
 module.exports = model;

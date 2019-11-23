@@ -57,9 +57,9 @@ const addUser = (req, res) => {
             }
         }).catch(error => {
             console.log(error);
-            res.status(500).send({ error: "Произошла ошибка сервера" });;
+            res.status(500).send({ error: "Произошла ошибка сервера" });
         });
-    } else res.status(403).send({ error: "Нет прав для выполнения операции" });;
+    } else res.status(403).send({ error: "Нет прав для выполнения операции" });
 };
 /**
  * редактирует пользователя исключая логин админ и иеющиеся логины
@@ -79,7 +79,7 @@ const editUser = (req, res) => {
             }
             else res.status(422).send({ error: "Пользователь существует" })
         })
-    } else res.status(403).send({ error: "Нет прав для выполнения операции" });;
+    } else res.status(403).send({ error: "Нет прав для выполнения операции" });
 };
 /**
  * удаляет пользователя
@@ -90,8 +90,10 @@ const delUser = (req, res) => {
     if (req.session.auth.role === roles.ADMIN) {
         User.findByIdAndDelete(req.body.id)
             .then(() => res.send())
-            .catch(err => res.status(500).send({ error: "Произошла ошибка сервера" }));
-    } else res.status(403).send({ error: "Нет прав для выполнения операции" });;
+            .catch(error => {
+                console.log(error);
+            res.status(500).send({ error: "Произошла ошибка сервера" })});
+    } else res.status(403).send({ error: "Нет прав для выполнения операции" });
 };
 
 
