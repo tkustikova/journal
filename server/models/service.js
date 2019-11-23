@@ -8,7 +8,8 @@ const schema = new mongoose.Schema({
     },
     cost: {
         type: Number,
-        required: true
+        required: true,
+        default: 0
     }
 });
 

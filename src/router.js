@@ -3,7 +3,6 @@ import Router from "vue-router";
 
 import MainTeacherView from "./views/MainTeacherView";
 import TeacherView from "./views/TeacherView";
-import ServiceView from "./views/ServiceView";
 import NotFoundView from "./views/NotFoundView";
 import LoginView from "./views/LoginView";
 import JournalView from "./views/JournalView";

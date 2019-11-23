@@ -41,7 +41,14 @@
 
         computed: {
             placeholder(){
-                return this.$route.name === "teachers" ? "Фамилия врача" : "Название журнала";
+                if(this.$route.name == "teachers"){
+                    return "Фамилия врача";
+                }
+                else if (this.$route.name == "services"){
+                    return "Название услуги";
+                }
+                else
+                return "Название журнала";
             }
         },
 
