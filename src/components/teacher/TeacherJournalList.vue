@@ -63,7 +63,7 @@
             <v-card>
                 <v-form v-model="form.valid" ref="form">
                     <v-card-title>
-                        <span class="headline">Данные журнала</span>
+                        <span class="headline">Данные приема</span>
                     </v-card-title>
                     <v-card-text>
                         <v-container grid-list-md>
@@ -243,9 +243,9 @@
             headers(){
                 return(
                     [
-                        { text: "Название", align: "left", value: "name", sortable: true },
+                        { text: "Пациент", align: "left", value: "name", sortable: true },
                         { text: "Дата создания", align: "left", value: "year", sortable: true },
-                        { text: "Держатель", align: "left", value: "owner", sortable: false },
+                        { text: "Врач", align: "left", value: "owner", sortable: false },
                         !this.admin && { text: "", align: "left", value: "", sortable: false }
                     ].filter(item => item)
                 )

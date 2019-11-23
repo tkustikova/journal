@@ -1,4 +1,6 @@
 module.exports = {
     ADMIN: "ADMIN",
-    TEACHER: "TEACHER"
+    TEACHER: "TEACHER",
+    PATIENT: "PATIENT"
+
 };
