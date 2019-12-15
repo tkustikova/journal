@@ -12,6 +12,7 @@ const express = require('express'),
     users = require("./controllers/users"),
     journals = require("./controllers/journals"),
     services = require("./controllers/services"),
+    patients = require("./controllers/patients"),
     port = 8000,
     session = require("express-session"),
     mongoose = require("mongoose"),
@@ -39,5 +40,6 @@ app.use('/api/user/', auth);
 app.use('/api/users/', users);
 app.use('/api/journals/', journals);
 app.use('/api/services/', services);
+app.use('/api/patients/', patients);
 
 app.listen(port, () => console.log(`Listening on port ${port}!`));

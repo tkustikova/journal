@@ -21,6 +21,7 @@ const schema = new mongoose.Schema({
         type: String,
         required: true
     },
+
 });
 
 const model = mongoose.model("User", schema);

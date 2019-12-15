@@ -24,6 +24,11 @@
                         active: this.$route.name === "teachers"
                     },
                     {
+                        title: "Пациенты",
+                        route: { name: "patients" },
+                        active: this.$route.name === "patients"
+                    },
+                    {
                         title: "Журналы",
                         route: { name: "journals" },
                         active: this.$route.name === "journals"

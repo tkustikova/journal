@@ -19,6 +19,7 @@ import TeacherJournalList from "./components/teacher/TeacherJournalList";
 import Journal from "./components/journal/Journal";
 import StudentCard from "./components/student/StudentCard";
 import LessonCard from "./components/lesson/LessonCard";
+import PatientList from "./components/patient/PatientList";
 
 const accesses = {
   teacher: [roles.TEACHER],
@@ -52,7 +53,14 @@ const routes = [
         path: "",
         component: TeacherList,
         meta: { requiresAuth: true, access: accesses.admin, replace: { [roles.TEACHER]: { name: "teacher"}}  }
-      }, {
+      },
+      {
+        name: "patients",
+        path: "patients",
+        component: PatientList,
+        meta: { requiresAuth: true, access: accesses.admin }
+      },
+      {
         name: "journals",
         path: "journals",
         component: JournalList,
