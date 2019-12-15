@@ -88,7 +88,6 @@ const getJournal = (req, res) =>
 const addJournal = (req, res) => {
     if (req.session.auth.role === roles.TEACHER && req.session.auth._id === req.body.owner) {
         const journal = req.body;
-
         new Log(journal).save()
             .then(journal => res.json(journal))
             .catch(error => {

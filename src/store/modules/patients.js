@@ -51,7 +51,7 @@ const actions = {
     },
     //редактировать пациента
     editPatient({ dispatch }, params) {
-        const url = 'patinets/edit';
+        const url = 'patients/edit';
         return RequestApi.request({ body: params, additional: { url,  showErr: true }})
             .then(patients => dispatch("getPatientList", patients));
     },
@@ -60,7 +60,7 @@ const actions = {
         if (!getters.patientList.length) {
             commit("SET_PATIENT_LIST", list)
         } else {
-            let patient = getters.patientList
+            let patient = getters.patientList;
             list.map(item => {
                 const index = patient.findIndex(patient => patient._id === item._id);
                 if (index !== -1) {
@@ -70,7 +70,7 @@ const actions = {
                 }
             });
 
-            commit("SET_JOURNAL_LIST", patient) ;
+            commit("SET_PATIENT_LIST", patient) ;
         }
     }
 

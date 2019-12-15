@@ -20,6 +20,7 @@ import Journal from "./components/journal/Journal";
 import StudentCard from "./components/student/StudentCard";
 import LessonCard from "./components/lesson/LessonCard";
 import PatientList from "./components/patient/PatientList";
+import StatisticsList from "./components/statistics/StatisticsList";
 
 const accesses = {
   teacher: [roles.TEACHER],
@@ -72,7 +73,15 @@ const routes = [
         component: ServiceList,
         meta: {requiresAuth: true, access: accesses.all}
 
+      },
+      {
+        name: "statistics",
+        path: "statistics",
+        component: StatisticsList,
+        meta: {requiresAuth: true, access: accesses.all}
+
       }
+
 
     ]
   },

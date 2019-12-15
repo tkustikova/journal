@@ -74,11 +74,11 @@
                                 </v-flex>
                                 <v-flex xs12>
                                     <v-select label="Выберите услугу"
-                                              required
                                               v-model="form.data.service"
                                               :items="serviceList"
                                               item-text="name"
                                               item-value="_id"
+                                              required
                                               return-object
                                               single-line></v-select>
                                 </v-flex>
@@ -177,17 +177,20 @@
                 return this.list
                     .filter(patient => patient.name.indexOf(this.filterWord) !== -1);
             },
+
+
             /**
              * список пациентов с учетом пагинации
              */
+
             resultList(){
                 return this.filtredList
                     .slice(0, this.pageLength * this.flightListPage < this.list.length ?
                         this.pageLength * this.flightListPage : this.list.length)
                     .map(item => {
-                        const doctor = this.$store.getters.userById(item.doctor);
                         const service = this.$store.getters.serviceById(item.service);
-                        if (doctor && service) {
+                        const doctor = this.$store.getters.userById(item.doctor);
+                        if (service && doctor) {
                             const doctorName = doctor.lastName + " " + doctor.firstName;
                             const serviceName = service.name;
                             return { ...item, serviceName, doctorName};
@@ -203,8 +206,7 @@
             serviceList() {
                 return (this.form.data.service ?
                     this.$store.getters.serviceList.filter(item => item._id !== this.form.data.service) :
-                    this.$store.getters.serviceList)
-                    .filter(item => item.role !== roles.ADMIN);
+                    this.$store.getters.serviceList);
             },
             userList() {
                 return (this.form.data.doctor ?
@@ -221,7 +223,7 @@
                 return(
                     [
                         { text: "ФИО пациента", align: "left", value: "name", sortable: true },
-                        { text: "Услуга", align: "left", value: "name", sortable: true },
+                        { text: "Услуга", align: "left", value: "service", sortable: true },
                         { text: "Лечащий врач", align: "left", value: "doctor", sortable: true },
                         { text: "", align: "right", value: "", sortable: false }
                     ]
@@ -278,8 +280,8 @@
             },
 
             addPatient: function () {
-                const {name, doctor} = this.form.data;
-                this.$store.dispatch("addPatient", {name, doctor})
+                const {name, service, doctor} = this.form.data;
+                this.$store.dispatch("addPatient", {name, service, doctor})
                     .then(this.cancel);
             },
 

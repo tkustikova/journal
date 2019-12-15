@@ -42,16 +42,14 @@ const getPatients = (req, res) => {
  * @param res
  */
 const addPatient = (req, res) => {
-    if (req.session.auth.role === roles.ADMIN || req.session.auth.role === roles.TEACHER) {
-        if (req.body !== undefined) {
-            const patient = req.body;
-            new Patient(patient).save()
-                .then(patient => res.json(patient))
-                .catch(error => {
-                    console.error(error);
-                    res.status(500).send({ error: "Произошла ошибка сервера" });
-                });
-        } else res.status(403).send({ error: "Некорретные данные пациента" });
+    if (req.session.auth.role === roles.TEACHER || req.session.auth.role === roles.ADMIN) {
+        const patient = req.body;
+        new Patient(patient).save()
+            .then(journal => res.json(journal))
+            .catch(error => {
+                console.error(error);
+                res.status(500).send({ error: "Произошла ошибка сервера" });
+            });
     } else res.status(403).send({ error: "Нет прав для выполнения операции" });
 };
 /**
@@ -60,7 +58,7 @@ const addPatient = (req, res) => {
  * @param res
  */
 const editPatient = (req, res) => {
-    if (req.body !== undefined) {
+    if (req.session.auth.role === roles.ADMIN || req.session.auth.role === roles.TEACHER) {
         Patient.findByIdAndUpdate(req.body._id, req.body)
             .then(patient => res.json(patient))
             .catch(error => {
