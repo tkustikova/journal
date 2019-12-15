@@ -17,14 +17,13 @@
                     :loading = "!loaded"
                     hide-actions
                     must-sort
-                    no-data-text=""
-            >
+                    no-data-text="">
                 <template slot="items"
                           slot-scope="props">
                     <tr class="pointer">
                         <td class="">{{ props.item.name }}</td>
-                        <td class="">{{ props.item.service }}</td>
-                        <td class="">{{ props.item.doctor }}</td>
+                        <td class="">{{ props.item.serviceName }}</td>
+                        <td class="">{{ props.item.doctorName }}</td>
                         <td>
                             <tool-tip-btn :round="true"
                                           @click="startEditPatient(props.item)"
@@ -270,12 +269,13 @@
             },
 
             apply() {
-                const patient = { ...this.$store.getters.patientById(this.form._id) };
-
-                patient.service = this.form.data.service._id;
-                patient.doctor = this.form.data.doctor._id;
-                this.$store.dispatch("editJournal", patient)
-                    .then(this.cancel);
+                if (this.form.valid) {
+                    if (!this.form.data._id) {
+                        this.addPatient();
+                    } else {
+                        this.editPatient();
+                    }
+                }
             },
 
             addPatient: function () {

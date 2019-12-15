@@ -8,6 +8,7 @@ const schema = new mongoose.Schema({
     },
     service: {
         type: mongoose.Schema.Types.ObjectId,
+        index: true,
         required: true
     },
     doctor: {
