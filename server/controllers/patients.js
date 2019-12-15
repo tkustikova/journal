@@ -45,7 +45,7 @@ const addPatient = (req, res) => {
     if (req.session.auth.role === roles.TEACHER || req.session.auth.role === roles.ADMIN) {
         const patient = req.body;
         new Patient(patient).save()
-            .then(journal => res.json(journal))
+            .then(patient => res.json(patient))
             .catch(error => {
                 console.error(error);
                 res.status(500).send({ error: "Произошла ошибка сервера" });

@@ -12,6 +12,7 @@ import services from "./modules/services";
 import patients from "./modules/patients";
 
 
+
 Vue.use(Vuex);
 
 const common = {

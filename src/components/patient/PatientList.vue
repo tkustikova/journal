@@ -191,7 +191,7 @@
                         const service = this.$store.getters.serviceById(item.service);
                         const doctor = this.$store.getters.userById(item.doctor);
                         if (service && doctor) {
-                            const doctorName = doctor.lastName + " " + doctor.firstName;
+                            const doctorName = doctor.firstName+ " " + doctor.lastName;
                             const serviceName = service.name;
                             return { ...item, serviceName, doctorName};
                         }
@@ -270,13 +270,12 @@
             },
 
             apply() {
-                if (this.form.valid) {
-                    if (!this.form.data._id) {
-                        this.addPatient();
-                    } else {
-                        this.editPatient();
-                    }
-                }
+                const patient = { ...this.$store.getters.patientById(this.form._id) };
+
+                patient.service = this.form.data.service._id;
+                patient.doctor = this.form.data.doctor._id;
+                this.$store.dispatch("editJournal", patient)
+                    .then(this.cancel);
             },
 
             addPatient: function () {
