@@ -6,6 +6,9 @@
                       active_text = "Добавить"
                       :active = "form.open"
                       class="ma-0 mr-1"></tool-tip-btn>
+        <div>
+            <p class="count mb-0"> Количество пациентов: {{ resultList.length }}</p>
+        </div>
         <v-flex v-if = "resultList.length || !loaded"
                 xs12 >
             <v-layout>
