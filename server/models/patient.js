@@ -6,6 +6,10 @@ const schema = new mongoose.Schema({
         type: String,
         required: true
     },
+    year: {
+        type: Date,
+        required: true
+    },
     service: {
         type: mongoose.Schema.Types.ObjectId,
         index: true,

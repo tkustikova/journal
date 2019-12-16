@@ -23,6 +23,7 @@
                     <tr class="pointer">
                         <td class="">{{ props.item.name }}</td>
                         <td class="">{{ props.item.serviceName }}</td>
+                        <td class="">{{ props.item.year.slice(0,10) }}</td>
                         <td class="">{{ props.item.doctorName }}</td>
                         <td>
                             <tool-tip-btn :round="true"
@@ -68,7 +69,7 @@
                                 <v-flex xs12>
                                     <v-text-field label="ФИО пациента"
                                                   required
-                                                  :rules="rules.patientName"
+                                                  :rules="rules.name"
                                                   v-model="form.data.name"></v-text-field>
                                 </v-flex>
                                 <v-flex xs12>
@@ -90,6 +91,36 @@
                                               required
                                               return-object
                                               single-line></v-select>
+                                </v-flex>
+                                <v-flex xs12>
+                                    <v-menu
+                                            ref="menu"
+                                            v-model="form.datePicker"
+                                            :close-on-content-click="false"
+                                            :nudge-right="40"
+                                            :return-value.sync="form.data.year"
+                                            lazy
+                                            transition="scale-transition"
+                                            offset-y
+                                            full-width
+                                            min-width="290px"
+                                    >
+                                        <template v-slot:activator="{ on }">
+                                            <v-text-field
+                                                    v-model="form.data.year"
+                                                    label="Выберите дату приема"
+                                                    prepend-icon="event"
+                                                    readonly
+                                                    :rules="rules.name"
+                                                    v-on="on"
+                                            ></v-text-field>
+                                        </template>
+                                        <v-date-picker v-model="form.data.year" no-title scrollable>
+                                            <v-spacer></v-spacer>
+                                            <v-btn flat color="primary" @click="form.datePicker = false">Cancel</v-btn>
+                                            <v-btn flat color="primary" @click="$refs.menu.save(form.data.year)">OK</v-btn>
+                                        </v-date-picker>
+                                    </v-menu>
                                 </v-flex>
                             </v-layout>
                         </v-container>
@@ -119,7 +150,7 @@
         components:{
             InfiniteLoading,
             NavigationNotFound,
-            ToolTipBtn,
+            ToolTipBtn
         },
 
         mounted(){
@@ -149,14 +180,16 @@
             form: {
                 open: false,
                 valid: false,
+                datePicker: false,
                 data: {
                     name: "",
                     service: "",
+                    year: new Date().toISOString().substr(0, 10),
                     doctor: ""
                 }
             },
             rules: {
-                patientName: [v => !!v || ""]
+                name: [v => !!v || ""]
             },
         }),
 
@@ -223,6 +256,7 @@
                     [
                         { text: "ФИО пациента", align: "left", value: "name", sortable: true },
                         { text: "Услуга", align: "left", value: "service", sortable: true },
+                        { text: "Дата приема", align: "left", value: "year", sortable: true },
                         { text: "Лечащий врач", align: "left", value: "doctor", sortable: true },
                         { text: "", align: "right", value: "", sortable: false }
                     ]
@@ -277,15 +311,34 @@
                     }
                 }
             },
-
+/*
             addPatient: function () {
                 const {name, service, doctor} = this.form.data;
                 this.$store.dispatch("addPatient", {name, service, doctor})
                     .then(this.cancel);
             },
-
+            */
+            addPatient: function () {
+                this.$store.dispatch("addPatient",
+                    {
+                        ...this.form.data,
+                        year: new Date(this.form.data.year)
+                    })
+                    .then(this.cancel);
+            },
+/*
             editPatient() {
                 this.$store.dispatch("editPatient", { ...this.form.data })
+                    .then(this.cancel);
+            },
+*/
+            editPatient() {
+                this.$store.dispatch("editPatient",
+                    {
+                        ...this.form.data,
+                        year: new Date(this.form.data.year),
+                        _id: this.form._id
+                    })
                     .then(this.cancel);
             },
 
@@ -293,11 +346,12 @@
                 this.$store.dispatch("delPatient", { id });
             },
 
-            startEditPatient({ name,service,doctor, _id }) {
+            startEditPatient({ name,service, year, doctor, _id }) {
                 this.openForm();
                 let data = this.form.data;
                 data.name = name;
                 data.service = service;
+                data.year = new Date(year).toISOString().substr(0, 10);
                 data.doctor = doctor;
                 this.form._id = _id;
             }

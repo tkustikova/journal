@@ -44,6 +44,7 @@ const getPatients = (req, res) => {
 const addPatient = (req, res) => {
     if (req.session.auth.role === roles.TEACHER || req.session.auth.role === roles.ADMIN) {
         const patient = req.body;
+        console.log(req.body)
         new Patient(patient).save()
             .then(patient => res.json(patient))
             .catch(error => {
