@@ -90,6 +90,7 @@
     import NavigationNotFound from "../navigation/navigationNotFound/NavigationNotFound";
     import ToolTipBtn from "../common/toolTipBtn/ToolTipBtn";
     import { roles } from "../../modules/constant";
+    import "./journal.css"
 
     export default {
         name: "TeacherList",
