@@ -7,7 +7,7 @@
                       :active = "form.open"
                       class="ma-0 mr-1"></tool-tip-btn>
         <div>
-            <p class="count mb-0"> Количество пациентов: {{ resultList.length }}</p>
+            <p class="count mb-0"> Количество клиентов: {{ resultList.length }}</p>
         </div>
         <v-flex v-if = "resultList.length || !loaded"
                 xs12 >
@@ -145,6 +145,7 @@
     import NavigationNotFound from "../navigation/navigationNotFound/NavigationNotFound";
     import ToolTipBtn from "../common/toolTipBtn/ToolTipBtn";
     import {roles} from "../../modules/constant";
+    import "./patientList.css"
 
 
     export default {

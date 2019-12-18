@@ -7,7 +7,7 @@
                       :active = "form.open"
                       class="ma-0 mr-1"></tool-tip-btn>
         <div>
-            <p class="count mb-0"> Количество врачей: {{ resultList.length }}</p>
+            <p class="count mb-0"> Количество мастеров: {{ resultList.length }}</p>
         </div>
         <v-flex v-if = "resultList.length || !loaded"
                 xs12 >

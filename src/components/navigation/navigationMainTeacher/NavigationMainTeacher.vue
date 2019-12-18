@@ -4,6 +4,7 @@
 
 <script>
     import NavigationAdd from "../navigationAdd/NavigationAdd";
+    import "./navigationMainTeacher.css"
 
     export default {
         name: "NavigationMainTeacher",

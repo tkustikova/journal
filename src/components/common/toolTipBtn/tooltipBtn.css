@@ -4,3 +4,7 @@
         min-width:36px !important;
     }
 }
+
+.hidden-sm-and-down {
+    font-size: 14px;
+}

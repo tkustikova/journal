@@ -16,3 +16,8 @@
     left: 100%;
     transform: translate(-100%, -100%);
 }
+
+.pointer {
+    font-size: 30px;
+    padding-left: 12px;
+}
