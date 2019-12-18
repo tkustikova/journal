@@ -1,5 +1,5 @@
 <template>
-    <Card :title="'Урок'"
+    <Card :title="'Посещение'"
           :item="lesson"></Card>
 </template>
 
