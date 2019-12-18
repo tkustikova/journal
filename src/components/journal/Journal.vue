@@ -128,7 +128,7 @@
                                                   v-model="form1.data.lastName"></v-text-field>
                                 </v-flex>
                                 <v-flex xs12>
-                                    <v-text-field label="Причина обращения"
+                                    <v-text-field label="Обращение"
                                                   required
                                                   :rules="rules.name"
                                                   v-model="form1.data.issue"
