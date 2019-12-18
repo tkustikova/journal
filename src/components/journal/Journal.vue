@@ -5,14 +5,14 @@
             <v-flex v-if="!admin">
                 <tool-tip-btn @click="form2.open = !form2.open"
                           active_icon = "add"
-                          active_text = "Прием"
+                          active_text = "Посещение"
                           data-prevent
                           :active = "form2.open"
                           class="ma-0 mr-1"></tool-tip-btn>
                 <tool-tip-btn @click="form1.open = !form1.open"
                               data-prevent
                               active_icon = "add"
-                              active_text = "Пациент"
+                              active_text = "Клиент"
                               :active = "form1.open"
                               class="ma-0 mr-4"></tool-tip-btn>
             </v-flex>вео
@@ -35,7 +35,7 @@
                         <th v-if="!admin">
                         </th>
                         <th class="text-xs-left">
-                            Пациент
+                            Клиент
                         </th>
                         <th class="text-xs-left pointer"
                             v-for="header in props.headers"

@@ -153,7 +153,7 @@
             pageLength: 25,
             roles,
             notFound:{
-                text: "Врачи не найдены",
+                text: "Мастера не найдены",
                 advice: null
             },
             form: {

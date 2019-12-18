@@ -242,7 +242,7 @@
             headers(){
                 return(
                     [
-                        { text: "Пациент", align: "left", value: "name", sortable: true },
+                        { text: "Название журнала", align: "left", value: "name", sortable: true },
                         { text: "Дата создания", align: "left", value: "year", sortable: true },
                         { text: "Врач", align: "left", value: "owner", sortable: false },
                         !this.admin && { text: "", align: "left", value: "", sortable: false }

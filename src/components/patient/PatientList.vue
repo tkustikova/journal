@@ -1,6 +1,6 @@
 <template>
     <v-layout wrap align-content-start>
-        <v-flex xs12 class = "py-2 text-xs-center"><h2>Пациенты</h2></v-flex>
+        <v-flex xs12 class = "py-2 text-xs-center"><h2>Клиенты</h2></v-flex>
         <tool-tip-btn @click="form.open = !form.open"
                       active_icon = "add"
                       active_text = "Добавить"
@@ -70,7 +70,7 @@
                         <v-container grid-list-md>
                             <v-layout wrap>
                                 <v-flex xs12>
-                                    <v-text-field label="ФИО пациента"
+                                    <v-text-field label="ФИО клиента"
                                                   required
                                                   :rules="rules.name"
                                                   v-model="form.data.name"></v-text-field>
@@ -177,7 +177,7 @@
             loaded: false,
             pageLength: 25,
             notFound:{
-                text: "Пациенты не найдены",
+                text: "Клиенты не найдены",
                 advice: null
             },
             form: {
@@ -257,10 +257,10 @@
             headers(){
                 return(
                     [
-                        { text: "ФИО пациента", align: "left", value: "name", sortable: true },
+                        { text: "ФИО клиента", align: "left", value: "name", sortable: true },
                         { text: "Услуга", align: "left", value: "service", sortable: true },
                         { text: "Дата приема", align: "left", value: "year", sortable: true },
-                        { text: "Лечащий врач", align: "left", value: "doctor", sortable: true },
+                        { text: "Мастер", align: "left", value: "doctor", sortable: true },
                         { text: "", align: "right", value: "", sortable: false }
                     ]
                 )

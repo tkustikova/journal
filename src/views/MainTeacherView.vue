@@ -48,7 +48,7 @@
                     return "Название услуги";
                 }
                 else if (this.$route.name == "patients"){
-                    return "ФИО пациента";
+                    return "ФИО клиента";
                 }
                 else
                 return "Название журнала";

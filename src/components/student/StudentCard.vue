@@ -1,5 +1,5 @@
 <template>
-    <Card :title="'Пациент'"
+    <Card :title="'Клиент'"
           :item="student"></Card>
 </template>
 

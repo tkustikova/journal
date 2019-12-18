@@ -19,7 +19,7 @@
             items() {
                 return [
                     {
-                        title: "Врачи",
+                        title: "Мастера",
                         route: { name: "teachers" },
                         active: this.$route.name === "teachers"
                     },
