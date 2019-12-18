@@ -24,7 +24,7 @@
                         active: this.$route.name === "teachers"
                     },
                     {
-                        title: "Пациенты",
+                        title: "Клиенты",
                         route: { name: "patients" },
                         active: this.$route.name === "patients"
                     },
