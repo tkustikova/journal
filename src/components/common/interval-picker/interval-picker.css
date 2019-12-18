@@ -1,8 +1,16 @@
 .interval-picker {
     max-width: 350px;
+    font-size: 18px;
 }
 
 .interval-picker .v-input {
     max-width: 150px;
     width: 150px
+}
+
+.pl-1 pr-3 {
+    font-size: 18px;
+}
+v-text-field {
+    font-size: 14px;
 }

@@ -96,6 +96,7 @@
     import InfiniteLoading from "vue-infinite-loading";
     import NavigationNotFound from "../navigation/navigationNotFound/NavigationNotFound";
     import ToolTipBtn from "../common/toolTipBtn/ToolTipBtn";
+    import "./service.css"
 
     export default {
         name: "ServiceList",

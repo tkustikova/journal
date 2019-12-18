@@ -15,7 +15,7 @@
                               active_text = "Клиент"
                               :active = "form1.open"
                               class="ma-0 mr-4"></tool-tip-btn>
-            </v-flex>вео
+            </v-flex>
             <interval-picker @update="updateInterval"></interval-picker>
         </v-layout>
         <v-flex v-if = "resultList.length || lessons.length ||  !loaded"
