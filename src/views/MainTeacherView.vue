@@ -42,7 +42,7 @@
         computed: {
             placeholder(){
                 if(this.$route.name == "teachers"){
-                    return "Фамилия врача";
+                    return "Фамилия мастера";
                 }
                 else if (this.$route.name == "services"){
                     return "Название услуги";

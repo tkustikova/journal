@@ -56,7 +56,7 @@
             <v-card>
                 <v-form v-model="form.valid" ref="form">
                     <v-card-title>
-                        <span class="headline">Данные приема</span>
+                        <span class="headline">Данные журнала</span>
                     </v-card-title>
                     <v-card-text>
                         <v-container grid-list-md>
@@ -201,7 +201,7 @@
                     [
                         { text: "Название журнала", align: "left", value: "name", sortable: true },
                         { text: "Дата создания", align: "left", value: "year", sortable: true },
-                        { text: "Врач", align: "left", value: "owner", sortable: false },
+                        { text: "Мастер", align: "left", value: "owner", sortable: false },
                         { text: "", align: "left", value: "", sortable: false },
                     ]
                 )

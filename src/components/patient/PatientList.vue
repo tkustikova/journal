@@ -90,7 +90,7 @@
                                               :items="userList"
                                               item-text="lastName"
                                               item-value="_id"
-                                              label="Выберите лечащего врача"
+                                              label="Выберите мастера"
                                               required
                                               return-object
                                               single-line></v-select>
@@ -111,7 +111,7 @@
                                         <template v-slot:activator="{ on }">
                                             <v-text-field
                                                     v-model="form.data.year"
-                                                    label="Выберите дату приема"
+                                                    label="Выберите дату записи"
                                                     prepend-icon="event"
                                                     readonly
                                                     :rules="rules.name"
@@ -260,7 +260,7 @@
                     [
                         { text: "ФИО клиента", align: "left", value: "name", sortable: true },
                         { text: "Услуга", align: "left", value: "service", sortable: true },
-                        { text: "Дата приема", align: "left", value: "year", sortable: true },
+                        { text: "Дата записи", align: "left", value: "year", sortable: true },
                         { text: "Мастер", align: "left", value: "doctor", sortable: true },
                         { text: "", align: "right", value: "", sortable: false }
                     ]

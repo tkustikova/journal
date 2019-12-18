@@ -63,13 +63,13 @@
             <v-card>
                 <v-form v-model="form.valid" ref="form">
                     <v-card-title>
-                        <span class="headline">Данные приема</span>
+                        <span class="headline">Данные журнала</span>
                     </v-card-title>
                     <v-card-text>
                         <v-container grid-list-md>
                             <v-layout wrap>
                                 <v-flex xs12>
-                                    <v-text-field label="Имя журнала"
+                                    <v-text-field label="Название журнала"
                                                   required
                                                   :rules="rules.name"
                                                   v-model="form.data.name"></v-text-field>
@@ -244,7 +244,7 @@
                     [
                         { text: "Название журнала", align: "left", value: "name", sortable: true },
                         { text: "Дата создания", align: "left", value: "year", sortable: true },
-                        { text: "Врач", align: "left", value: "owner", sortable: false },
+                        { text: "Мастер", align: "left", value: "owner", sortable: false },
                         !this.admin && { text: "", align: "left", value: "", sortable: false }
                     ].filter(item => item)
                 )

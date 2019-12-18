@@ -166,7 +166,7 @@
             <v-card>
                 <v-form v-model="form2.valid" ref="form2">
                     <v-card-title>
-                        <span class="headline">Информация о приеме</span>
+                        <span class="headline">Информация о записи</span>
                     </v-card-title>
                     <v-card-text>
                         <v-container grid-list-md>
@@ -199,7 +199,7 @@
                                         <template v-slot:activator="{ on }">
                                             <v-text-field
                                                     v-model="form2.data.date"
-                                                    label="Дата создания приема"
+                                                    label="Дата создания записи"
                                                     prepend-icon="event"
                                                     readonly
                                                     :rules="rules.name"

@@ -5,7 +5,7 @@
                 <filter-field @setFilterStr="setFilterStr"
                               :height="36"
                               class="align-self-center justify-end"
-                              placeholder="Фамилия ученика"></filter-field>
+                              placeholder="Фамилия клиента"></filter-field>
             </v-layout>
         </template>
         <template slot="content">

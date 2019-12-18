@@ -1,6 +1,6 @@
 <template>
     <v-layout wrap align-content-start>
-        <v-flex xs12 class = "py-2 text-xs-center"><h2>Список врачей</h2></v-flex>
+        <v-flex xs12 class = "py-2 text-xs-center"><h2>Список мастеров</h2></v-flex>
         <tool-tip-btn @click="form.open = !form.open"
                       active_icon = "add"
                       active_text = "Добавить"
@@ -30,7 +30,7 @@
                         <td class="">{{ props.item.lastName }}</td>
                         <td class="">{{ props.item.login }}</td>
                         <td class="">{{ props.item.password }}</td>
-                        <td class="">{{ props.item.role === roles.ADMIN ? "Зав. отделением" : "Врач"}}</td>
+                        <td class="">{{ props.item.role === roles.ADMIN ? "Ведущий мастер" : "Мастер"}}</td>
                         <td>
                             <tool-tip-btn :round="true"
                                           @click="startEditUser(props.item)"
@@ -67,7 +67,7 @@
             <v-card>
                 <v-form v-model="form.valid" ref="form">
                     <v-card-title>
-                        <span class="headline">Данные врача</span>
+                        <span class="headline">Данные мастера</span>
                     </v-card-title>
                     <v-card-text>
                         <v-container grid-list-md>
@@ -98,7 +98,7 @@
                                                   v-model="form.data.password"></v-text-field>
                                 </v-flex>
                                 <v-flex xs12>
-                                    <v-checkbox label="Заведующий отделением"
+                                    <v-checkbox label="Ведущий мастер"
                                                 v-model="form.mainTeacher"></v-checkbox>
                                 </v-flex>
                             </v-layout>
