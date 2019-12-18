@@ -1,3 +1,14 @@
 .auth {
     width: 100%;
 }
+.auth__form-header {
+    font-size: 20px;
+}
+
+.auth__label, .user-auth__label{
+    font-size: 18px;
+}
+
+#auth-btn {
+    font-size: 18px;
+}

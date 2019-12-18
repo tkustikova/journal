@@ -2,8 +2,7 @@
     <v-form class="auth"
             v-model="authForm.valid"
             @keyup.native.enter="submit">
-        <v-flex class = "auth__form-header font-weight-bold"
-                text-xs-center>Вход в личный кабинет</v-flex>
+        <v-flex class = "auth__form-header font-weight-bold text-xs-center">Вход в личный кабинет</v-flex>
         <v-layout justify-center>
             <v-flex xs12>
                 <label class = "auth__label">Логин</label>
