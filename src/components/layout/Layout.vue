@@ -8,7 +8,7 @@
                 <v-layout>
                     <v-flex align-self-center xs4 sm2 md1>
                         <h2 @click="$router.push('/')"
-                            class="pointer">MedClinic</h2>
+                            class="pointer">BeautyClinic</h2>
                     </v-flex>
                     <v-flex class="px-2">
                         <slot name="toolbar"></slot>

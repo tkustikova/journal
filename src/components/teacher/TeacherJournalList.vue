@@ -85,8 +85,7 @@
                                             transition="scale-transition"
                                             offset-y
                                             full-width
-                                            min-width="290px"
-                                    >
+                                            min-width="290px">
                                         <template v-slot:activator="{ on }">
                                             <v-text-field
                                                     v-model="form.data.year"
@@ -204,13 +203,13 @@
             },
 
             admin() {
-               return this.$store.getters.authUserIsAdmin
+                return this.$store.getters.authUserIsAdmin
             },
 
             teacherFullName() {
-               return this.admin && this.$store.getters.userById(this.user_id) &&
-                   this.$store.getters.userById(this.user_id).lastName + " " +
-                   this.$store.getters.userById(this.user_id).firstName + "."
+                return this.admin && this.$store.getters.userById(this.user_id) &&
+                    this.$store.getters.userById(this.user_id).lastName + " " +
+                    this.$store.getters.userById(this.user_id).firstName + "."
             },
 
             /**
@@ -236,7 +235,7 @@
             },
 
             id() {
-               return this.user_id || this.$store.getters.authUser;
+                return this.user_id || this.$store.getters.authUser;
             },
 
             //конфигурация таблицы
