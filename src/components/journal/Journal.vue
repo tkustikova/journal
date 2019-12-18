@@ -88,7 +88,7 @@
                             :key="i"
                             data-prevent
                             @click="toggleVisit({ studentId: props.item._id, lessonId: lesson._id })">
-                            {{props.item.misses && props.item.misses.includes(lesson._id) ? "Н" : ""}}
+                            {{props.item.misses && props.item.misses.includes(lesson._id) ? "+" : ""}}
                         </td>
                     </tr>
                 </template>
