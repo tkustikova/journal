@@ -2,6 +2,9 @@
     <v-form class="auth"
             v-model="authForm.valid"
             @keyup.native.enter="submit">
+        <v-flex align-self-center xs4 sm2 md1>
+            <h2 class="h2-auth">BeautyClinic</h2>
+        </v-flex>
         <v-flex class = "auth__form-header font-weight-bold text-xs-center">Вход в личный кабинет</v-flex>
         <v-layout justify-center>
             <v-flex xs12>
