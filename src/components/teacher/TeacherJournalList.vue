@@ -63,7 +63,7 @@
             <v-card>
                 <v-form v-model="form.valid" ref="form">
                     <v-card-title>
-                        <span class="headline">Данные журнала</span>
+                        <span class="headline">Новый журнал</span>
                     </v-card-title>
                     <v-card-text>
                         <v-container grid-list-md>
@@ -89,7 +89,7 @@
                                         <template v-slot:activator="{ on }">
                                             <v-text-field
                                                     v-model="form.data.year"
-                                                    label="Picker in menu"
+                                                    label="Выберите дату"
                                                     prepend-icon="event"
                                                     readonly
                                                     :rules="rules.name"

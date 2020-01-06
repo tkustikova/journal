@@ -60,7 +60,7 @@
             <v-card>
                 <v-form v-model="form.valid" ref="form">
                     <v-card-title>
-                        <span class="headline">Данные услуги</span>
+                        <span class="headline">Новая услуга</span>
                     </v-card-title>
                     <v-card-text>
                         <v-container grid-list-md>

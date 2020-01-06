@@ -64,7 +64,7 @@
             <v-card>
                 <v-form v-model="form.valid" ref="form">
                     <v-card-title>
-                        <span class="headline">Данные пациента</span>
+                        <span class="headline">Данные клиента</span>
                     </v-card-title>
                     <v-card-text>
                         <v-container grid-list-md>

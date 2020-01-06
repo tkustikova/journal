@@ -5,7 +5,7 @@
             <v-flex v-if="!admin">
                 <tool-tip-btn @click="form2.open = !form2.open"
                           active_icon = "add"
-                          active_text = "Посещение"
+                          active_text = "Запись"
                           data-prevent
                           :active = "form2.open"
                           class="ma-0 mr-1"></tool-tip-btn>
@@ -110,7 +110,7 @@
             <v-card>
                 <v-form v-model="form1.valid" ref="form1">
                     <v-card-title>
-                        <span class="headline">Данные пациента</span>
+                        <span class="headline">Данные клиента</span>
                     </v-card-title>
                     <v-card-text>
                         <v-container grid-list-md>
@@ -166,7 +166,7 @@
             <v-card>
                 <v-form v-model="form2.valid" ref="form2">
                     <v-card-title>
-                        <span class="headline">Информация о записи</span>
+                        <span class="headline">Новая запись</span>
                     </v-card-title>
                     <v-card-text>
                         <v-container grid-list-md>
@@ -199,7 +199,7 @@
                                         <template v-slot:activator="{ on }">
                                             <v-text-field
                                                     v-model="form2.data.date"
-                                                    label="Дата создания записи"
+                                                    label="Дата записи"
                                                     prepend-icon="event"
                                                     readonly
                                                     :rules="rules.name"
@@ -276,7 +276,7 @@
             pageLength: 25,
             roles,
             notFound:{
-                text: "Журналы не найдены",
+                text: "Клиенты не найдены",
                 advice: null
             },
             //данные формы пациента
